@@ -1,6 +1,3 @@
-.App {
-  text-align: center;
-}
 
 .App-logo {
   height: 40vmin;
@@ -36,3 +33,17 @@
     transform: rotate(360deg);
   }
 }
+
+#main-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+#repository-list-area {
+  width: 30%;
+}
+
+#repository-detail-area {
+  width: 70%;
+}
+

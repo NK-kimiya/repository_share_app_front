@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color:#3cb371;
+    align-items: center;
+    height:50px;
+}
+
+nav h1 {
+    color: white;
+}
+
+nav button {
+    display: block;
+    border: solid 1px white;
+    background-color:#3cb371;
+    color: white;
+    height: 30px;
+}
+
+
+

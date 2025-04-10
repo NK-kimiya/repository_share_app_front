@@ -15,6 +15,7 @@ const RepositoryItem = ({Repository}) => {
       <a href='#' className='repository-list-area-item' onClick={() => setRepositoryDetail(Repository)}>
       <h3>{Repository.title || 'No Title'}</h3>
       <p>{Repository.description || 'No Description'}</p>
+      {Repository.readCount !== 0 && <small>新着{Repository.readCount}件のメッセージ</small>}
       </a>
    
      

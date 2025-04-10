@@ -45,8 +45,15 @@ const RepositoryProvider = ({ children }) => {
     
         // メッセージ受信
         socket.on('receive_message', (data) => {
-          console.log('📥 メッセージを受信:', data.content);
+          console.log('📥 メッセージを受信:', data.readCount);
             setFetchMessage((prev) => [...prev, data]);
+          setRepositoryData((prev) => 
+            prev.map((item) =>
+              item.id === data.repository
+               ?{...item,readCount:item.readCount + 1}
+               :item
+            )
+          );
          
         });
     
@@ -62,6 +69,29 @@ const RepositoryProvider = ({ children }) => {
             fetchRepositories(repositoryRoom.id);
         }
       }, [repositoryRoom]);
+
+      useEffect(() => {
+        console.log("取得したリポジトリデータ"+repositoryData[0]);
+        if (repositoryData.length > 0 && username) {
+          const idList = repositoryData.map(item => item.id);
+      
+          axios.post('http://localhost:4000/create-read-status', {
+            roomId: idList, // ← 必要に応じて最初の1つだけでもOK
+            username: username,
+            readCount: 0
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(res => {
+            console.log('MongoDBへ送信成功:', res.data);
+          })
+          .catch(err => {
+            console.error('MongoDBへの送信失敗:', err.response ? err.response.data : err);
+          });
+        }
+      }, [repositoryData, username]); // 依存に含める
 
      //メッセージを取得する関数
     useEffect(() => {

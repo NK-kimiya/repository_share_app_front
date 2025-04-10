@@ -67,6 +67,8 @@
     text-decoration: none;
 }
 
+
+
 #repository-close-btn {
     display: block;
     background-color: black;
@@ -129,4 +131,11 @@
     background-color: #3cb371;
     border: none;
     color: white;
+}
+
+.repository-list-area-item small {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
 }

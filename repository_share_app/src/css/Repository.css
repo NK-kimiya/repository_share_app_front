@@ -1,0 +1,141 @@
+#repository-category-selected-area {
+    display: flex;
+    flex-wrap: wrap;
+}
+#repository-create-area h2 {
+    color: white;
+    width: 200px;
+    margin: 10px auto;
+    border-bottom:solid #3cb371;
+}
+#repository-create-area input,
+#repository-create-area textarea {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+}
+
+#repository-create-area input {
+    height: 30px;
+}
+
+#repository-create-area textarea {
+    height: 80px;
+}
+
+.repository-category-selected-item {
+    background-color:white;
+    border-radius: 20px;
+    color: #3cb371;
+    padding: 3px 5px;
+    border: solid 1px #3cb371;
+    margin: 5px;
+}
+
+#repository-create-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: #3cb371;
+    border: none;
+    color: white;
+    padding: 8px 13px;
+}
+
+#repository-create-modal {
+    display: block;
+    background-color: #3cb371;
+    color: white;
+    width: 80px;
+    height: 80px;
+    line-height: 66px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 40px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border: none;
+}
+    
+
+.repository-list-area-item{
+    display: block;
+    padding: 10px 30px;
+    text-align: left;
+    color: #3cb371;
+    border-bottom:solid 1px gray;
+    text-decoration: none;
+}
+
+
+
+#repository-close-btn {
+    display: block;
+    background-color: black;
+    border: none;
+    color: white;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+.repository-detail-area {
+    width: 80%;
+    margin: 20px auto;
+}
+.repository-detail-area-video {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.repository-detail-area-description {
+    width: 80%;
+    text-align: left;
+    margin: 10px auto;
+}
+
+.repository-detail-area-link {
+    width: 80%;
+    margin: 10px auto;
+    display: block;
+    text-align: left;
+    color: #3cb371;
+}
+
+#message-list-area {
+    width: 80%;
+    margin: 20px auto;
+    height: 300px;
+    overflow-y: auto;    
+}
+
+#message-send-area {
+    width: 80%;
+    margin: 20px auto;
+}
+
+#message-send-area textarea {
+    width: 80%;
+    height: 150px;
+}
+
+#message-send-area button {
+    display: block;
+    width: 20%;
+    margin: 10px auto;
+    padding: 10px 15px;
+    background-color: #3cb371;
+    border: none;
+    color: white;
+}
+
+.repository-item small {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}

@@ -1,0 +1,55 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color:#3cb371;
+    align-items: center;
+    height:50px;
+}
+
+nav h1 {
+    color: white;
+}
+
+nav button {
+    display: block;
+    border: solid 1px white;
+    background-color:#3cb371;
+    color: white;
+    height: 30px;
+}
+
+.sub-nav-area {
+    width: 200px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    min-height: 100vh;
+    background-color: black;
+}
+
+.sub-nav-area ul {
+    list-style: none;
+    padding: 0px;
+    width: 100%;
+}
+.sub-nav-area ul li {
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+    border-bottom:solid 1px white ;
+    padding-bottom: 5px;
+}
+.sub-nav-area ul li a {
+    color: white;
+    text-decoration: none;
+}
+.sub-nav-area ul li a small {
+    padding: 3px 10px;
+    background-color: #3cb371;
+    color: white;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+
+

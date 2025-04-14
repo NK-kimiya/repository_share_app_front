@@ -1,0 +1,88 @@
+/*コンテナの大きさをSVGと同じにし、子要素（数字）を中央に配置*/
+.progress-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 20px auto;
+}
+
+.progress-ring__circle {
+    /*円のスタート位置を「上」に変更（デフォルトは右から）*/
+    transform: rotate(-90deg);
+
+    transform-origin: 50% 50%;
+    /*円周全体の長さ*/
+    stroke-dasharray: 314; /* 2πr (r=50) */
+    /* 最初は全く表示されない（塗られていない状態）*/
+    stroke-dashoffset: 314;
+    /*アニメーションでスムーズに変化させる*/
+    transition: stroke-dashoffset 0.5s;
+}
+
+/* 中央に数値（"0%"など）を表示するための設定*/
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: #3cb371;
+}
+
+.AiSearchProject-area {
+
+}
+
+.AiSearchProject-area h2 {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.AiSearchProject-area h3 {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.AiSearchProject-area textarea {
+    display: block;
+    width: 480px;
+    height: 50px;
+    margin: 20px auto;
+}
+
+.search-button {
+    display: block;
+    width: 200px;
+    background-color: #3cb371;
+    border: none;
+    margin:20px auto;
+    color: white;
+    padding: 10px 10px;
+}
+
+.ai-search-close-button {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: black;
+    font-size: 80px;
+}
+
+.ai-search-modal-open-btn {
+    position: fixed;
+    top: 100px;
+    left: 10px;
+    background-color: rgba(255,255,255,1);
+    border: none;
+    font-size: 30px;
+}
+
+.result-message {
+    text-align: center;
+}

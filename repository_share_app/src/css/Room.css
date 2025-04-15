@@ -26,3 +26,7 @@
     color: white;
     margin: 10px auto;
 }
+
+.room-login-area .sub-nav-area-none {
+    display: none;
+}

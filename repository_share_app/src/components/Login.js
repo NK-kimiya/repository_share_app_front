@@ -95,14 +95,22 @@ const Login = (props) => {
   };
   return (
     <div id='login-area'>
-      <h1>Share</h1>
+        {!state.isLoginView? 
+        <h3>会員登録</h3>:
+        <h3>ログイン</h3>
+        }
       <form id='login-area-form' onSubmit={login}>
+        <small>メールアドレス</small>
         <input type='email'  
         name='email'
         className='login-area-form-input'
         value={state.credentialsLog.email}
-        onChange={inputChangeLog}>
+        onChange={inputChangeLog}
+        >
         </input>
+        {!state.isLoginView && (
+          <small>ユーザー名</small>
+        )}
         {!state.isLoginView && (
           <input
             type="text"
@@ -110,9 +118,9 @@ const Login = (props) => {
             className="login-area-form-input"
             value={state.credentialsLog.username}
             onChange={inputChangeLog}
-            placeholder="ユーザー名"
         />
-)}
+        )}
+        <small>パスワード</small>
         <input type='password'  
         name='password'
         className='login-area-form-input'

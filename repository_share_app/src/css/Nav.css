@@ -25,6 +25,7 @@ nav button {
     left: 0px;
     min-height: 100vh;
     background-color: black;
+    z-index: 999;
 }
 
 .sub-nav-area ul {
@@ -51,5 +52,39 @@ nav button {
     border-radius: 5px;
 }
 
+.sub-nav-area-none {
+    width: 70px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    min-height: 100vh;
+    background-color: black;
+}
 
+.sub-nav-area-none ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.sub-nav-toggle-btn {
+    color: white;
+    background-color: rgba(0, 0,0, 1);
+    border: none;
+    font-size: 25px;
+}
+
+.sub-nav-area-none ul li {
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+.sub-nav-area-none ul li a {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+.sub-nav-area-none ul li a svg {
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
 

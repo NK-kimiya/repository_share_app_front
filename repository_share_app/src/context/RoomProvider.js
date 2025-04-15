@@ -2,7 +2,9 @@
 import React, { createContext, useEffect, useReducer, useState,useCookies } from 'react';
 import axios from 'axios';
 import { TOGGLE_MODE, INPUT_EDIT } from '../components/actionType';
+import { withCookies } from 'react-cookie';
 // ✅ Context を作成
+let isLoggingOut = false;
 export const RoomContext = createContext();
 
 
@@ -40,7 +42,8 @@ const roomReducer = (state, action) => {
 };
 
 // ✅ RoomProviderコンポーネント
-const RoomProvider = ({ children }) => {
+const RoomProvider = (props) => {
+  const { children } = props;
   const [state, dispatch] = useReducer(roomReducer, initialState);
   const [roomData, setRoomData] = useState(null);
 
@@ -61,6 +64,8 @@ const RoomProvider = ({ children }) => {
 
   // ✅ 入室・新規作成API処理
   const entering = async (event, token) => {
+    console.log("送信するname:", state.credentialsLog.name);
+console.log("送信するpassword:", state.credentialsLog.password);
     event.preventDefault();
     localStorage.removeItem('roomData');
 
@@ -71,7 +76,10 @@ const RoomProvider = ({ children }) => {
         // ✅ 入室処理（ルーム取得）
         res = await axios.post(
           `http://127.0.0.1:8000/api/rooms/filter/`,
-          { password: state.credentialsLog.password },
+          { 
+            name: state.credentialsLog.name,
+            password: state.credentialsLog.password 
+          },
           {
             headers: {
               'Content-Type': 'application/json',
@@ -106,22 +114,40 @@ const RoomProvider = ({ children }) => {
       }
 
       // ✅ データが取得できた場合
-      if (res.data[0]?.id) {
-        const roomData = {id:res.data[0].id,name:res.data[0].name}
-        console.log("ログインしたルームは：",res.data[0].name);
-        console.log("ログインしたルームIDは：",res.data[0].id);
-        localStorage.setItem('roomData',JSON.stringify(roomData));
-        setRoomData(res.data[0]);  // ✅ roomDataにセット
+      if (res.data?.id) {
+        const roomData = { id: res.data.id, name: res.data.name };
+        console.log("ログインしたルームは：", res.data.name);
+        console.log("ログインしたルームIDは：", res.data.id);
+        localStorage.setItem('roomData', JSON.stringify(roomData));
+        setRoomData(res.data);  // ✅ 正常にセット
         window.location.href = '/app';
-        return true;               // ✅ 成功を返す
+        return true;
       } else {
-        return false;              // ✅ 失敗を返す
+        return false;
       }
     } catch (error) {
-      window.location.href = '/room';
-      console.error('エラー:', error);
-      return false;
+      if (error.response) {
+        if (error.response.status === 401) {
+
+          console.warn("⚠️ トークンが無効、または期限切れです");
+          Logout();
+        } else {
+          console.error("リクエストエラー:", error.response.data);
+        }
+      } else {
+        console.error("Axiosリクエスト失敗:", error.message);
+      }
     }
+  };
+
+  //ログアウト
+  const Logout = () => {
+    console.log("ログアウトします。");
+    if (window.location.pathname === '/') return;
+    props.cookies.remove('jwt-token');
+    localStorage.removeItem('roomData');
+      
+    window.location.href = '/'; // ログイン画面にリダイレクト
   };
 
 
@@ -142,4 +168,4 @@ const RoomProvider = ({ children }) => {
   );
 };
 
-export default RoomProvider;
+export default withCookies(RoomProvider)

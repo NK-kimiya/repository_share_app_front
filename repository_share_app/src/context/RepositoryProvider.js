@@ -40,8 +40,8 @@ const RepositoryProvider = (props) => {
     const {
         categories,
         selectedCategories
-      } = useContext(CategoryContext);
-    
+    } = useContext(CategoryContext);
+
     const [cookies] = useCookies(['jwt-token']);
     const token = cookies['jwt-token'];
     useEffect(() => {
@@ -123,7 +123,9 @@ const RepositoryProvider = (props) => {
     },[receiveMessage])
 
     useEffect(() => {
+      
         if (repositoryRoom?.id) {
+          console.log("ストレージのルームID",repositoryRoom.id);
             fetchRepositories(repositoryRoom.id);
         }
       }, [repositoryRoom]);
@@ -230,7 +232,17 @@ const RepositoryProvider = (props) => {
           setDemoVideo(null);
           setRepositoryData(prevData => [...prevData,response.data]);
         }catch (error) {
-         console.log("エラー詳細", error.response?.data)
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         }
       }
 
@@ -276,7 +288,17 @@ if (newMessage.created_at) {
           sendMessage(formattedMessage);
           setMessage('');
         } catch(error){
-            console.error('送信エラー:', error.response?.data || error.message);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         }
       }
 
@@ -291,8 +313,18 @@ if (newMessage.created_at) {
               console.log("取得したユーザー：",res.data.username);
               setUserName(res.data.username);
              
-            } catch (err) {
-              console.error(err);
+            } catch (error) {
+              if (error.response) {
+                if (error.response.status === 401) {
+    
+                  console.warn("⚠️ トークンが無効、または期限切れです");
+                  Logout();
+                } else {
+                  console.error("リクエストエラー:", error.response.data);
+                }
+              } else {
+                console.error("Axiosリクエスト失敗:", error.message);
+              }
             }
           };
 
@@ -317,7 +349,17 @@ if (newMessage.created_at) {
               setFetchMessage(response.data);
               
         } catch(error) {
-            console.error('メッセージ取得エラー:', error.response?.data || error.message);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         }
       }
 
@@ -362,7 +404,17 @@ if (newMessage.created_at) {
           console.log("カテゴリーでフィルターしたリポジトリ：",response.data);
         })
         .catch(error => {
-          console.error('リポジトリ取得エラー:', error);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         });
       }
       
@@ -390,7 +442,17 @@ if (newMessage.created_at) {
         }));
         console.log('お気に入り追加成功:', response.data);
         } catch (error) {
-          console.error('お気に入り追加失敗:', error.response?.data || error.message);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         }
       };
 
@@ -409,7 +471,17 @@ if (newMessage.created_at) {
           setFavoriteRepositories(response.data);
           return response.data;
         } catch (error) {
-          console.error('お気に入り取得失敗:', error.response?.data || error.message);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
           return [];
         }
       };
@@ -445,16 +517,30 @@ if (newMessage.created_at) {
           console.log('お気に入り解除成功:', response.data);
           
         } catch (error) {
-          console.error('お気に入り解除失敗:', error.response?.data || error.message);
+          if (error.response) {
+            if (error.response.status === 401) {
+
+              console.warn("⚠️ トークンが無効、または期限切れです");
+              Logout();
+            } else {
+              console.error("リクエストエラー:", error.response.data);
+            }
+          } else {
+            console.error("Axiosリクエスト失敗:", error.message);
+          }
         }
       };
 
       //ログアウト
+
       const Logout = () => {
+        console.log("ログアウトします。");
+        if (window.location.pathname === '/') return;
         props.cookies.remove('jwt-token');
         localStorage.removeItem('roomData');
-        window.location.href = '/';
-      }
+          
+        window.location.href = '/'; // ログイン画面にリダイレクト
+      };
       
       return (
         <RepositoryContext.Provider value={{

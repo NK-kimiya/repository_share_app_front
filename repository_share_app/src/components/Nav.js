@@ -1,23 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {LuLogOut} from "react-icons/lu";
 import { withCookies } from 'react-cookie';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faAirbnb } from '@fortawesome/free-brands-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 const Nav = (props) => {
+  const [subNavToggle,setSubNavToggle] = useState(false);
+  
+  // ✅ 値を反転する関数
   const Logout = () => {
     props.cookies.remove('jwt-token');
     localStorage.removeItem('roomData');
-    window.location.href = '/';
+    window.location.href = '/'; // ログイン画面へ
+  }
+
+    //ログアウト
+    const roomLogout = () => {
+      localStorage.removeItem('roomData');  
+      window.location.href = '/room'; // ログイン画面にリダイレクト
+    };
+  const toggleSubNav= () => {
+    setSubNavToggle(prev => !prev);
   }
   return (
     <nav>
        <h1>Share</h1>
        <button onClick={Logout}>ログアウト</button>
-       <div className='sub-nav-area'>
+       <div className={subNavToggle ? 'sub-nav-area' : 'sub-nav-area-none'}>
+       {subNavToggle ? 
+       <button onClick={toggleSubNav} className='sub-nav-toggle-btn'>＜</button> : 
+       <button onClick={toggleSubNav} className='sub-nav-toggle-btn'>＞</button>}
+        
         <ul>
-          <li><a href='/app'>ルームTOP</a></li>
-          <li><a href='/ai-search'>AI検索<small>BETA</small></a></li>
-          <li><a href='/favorite'>お気に入り</a></li>
-          <li><a href='#'>ルーム退出</a></li>
+          {subNavToggle ?  
+          <li><a href='/app'>ルームTOP</a></li>:
+          <li><a href='/app'><FontAwesomeIcon icon={faHouse} /></a></li>
+          }
+
+          {subNavToggle ?  
+          <li><a href='/ai-search'>AI検索<small>BETA</small></a></li>:
+          <li><a href='/app'><FontAwesomeIcon icon={faAirbnb} /></a></li>
+          }
+
+          {subNavToggle ?  
+          <li><a href='/favorite'>お気に入り</a></li>:
+          <li><a href='/app'><FontAwesomeIcon icon={faThumbsUp} /></a></li>
+          }
+
+          {subNavToggle ?  
+          <li><a href='#' onClick={roomLogout}>ルーム退出</a></li>:
+          <li><a href='#' onClick={roomLogout}><FontAwesomeIcon icon={faDoorOpen}/></a></li>
+          }
         </ul>
        </div>
     </nav>

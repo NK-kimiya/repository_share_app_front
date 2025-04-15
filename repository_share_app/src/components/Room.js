@@ -3,6 +3,7 @@ import React, { useContext,useEffect } from 'react';
 import { withCookies } from 'react-cookie';
 import { RoomContext } from '../context/RoomProvider';  // ✅ ProviderからContextをインポート
 import { useNavigate } from 'react-router-dom'; // ✅ react-router の遷移フック
+import Nav from './Nav';
 
 const Room = (props) => {
   const { state, toggleView, inputChangeLog, entering} = useContext(RoomContext);
@@ -23,21 +24,24 @@ const Room = (props) => {
 
 
   return (
+    <div className='room-login-area'>
+      <Nav/>
     <div id="entering-area">
-      <h1>Share</h1>
+      {state.isEnteringView ? (
+            <h3>ルームの新規作成</h3>
+        ) : (
+            <h3>ルームに参加</h3>
+        )}
       <form id="entering-area-form" onSubmit={handleSubmit}>
-        {/* 新規作成モードの時だけname入力を表示 */}
-        {!state.isEnteringView && (
-          <input
+        <small>ルーム名</small>
+        <input
             type="text"
             name="name"
             className="entering-area-form-input"
             value={state.credentialsLog.name}
             onChange={inputChangeLog}
-          />
-        )}
-
-        {/* パスワード入力 */}
+        />
+        <small>パスワード</small>
         <input
           type="password"
           name="password"
@@ -66,6 +70,7 @@ const Room = (props) => {
           </button>
         )}
       </form>
+    </div>
     </div>
   );
 };

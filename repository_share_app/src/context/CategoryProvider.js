@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-
+import { withCookies } from 'react-cookie';
 export const CategoryContext = createContext();
 
-const CategoryProvider = ({children}) => {
+const CategoryProvider = (props) => {
+  const { children } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputCategoryName, setInputCategoryName] = useState('');
   const [categories, setCategories] = useState([]);
@@ -68,7 +69,17 @@ const CategoryProvider = ({children}) => {
       setCategories([...categories, response.data]);
       closeModal();
     } catch (error) {
-      console.error('カテゴリ作成エラー:', error.response?.data || error.message);
+      if (error.response) {
+        if (error.response.status === 401) {
+
+          console.warn("⚠️ トークンが無効、または期限切れです");
+          Logout();
+        } else {
+          console.error("リクエストエラー:", error.response.data);
+        }
+      } else {
+        console.error("Axiosリクエスト失敗:", error.message);
+      }
     }
   };
 
@@ -80,6 +91,20 @@ const CategoryProvider = ({children}) => {
       setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
+
+  //ログアウト
+
+
+const Logout = () => {
+  console.log("ログアウトします。");
+  if (window.location.pathname === '/') return;
+  // ✅ ブラウザ全体に状態を記録
+  props.cookies.remove('jwt-token');
+  localStorage.removeItem('roomData');
+    
+  window.location.href = '/'; // ログイン画面にリダイレクト
+};
+  
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -105,4 +130,4 @@ const CategoryProvider = ({children}) => {
   )
 }
 
-export default CategoryProvider
+export default withCookies(CategoryProvider)

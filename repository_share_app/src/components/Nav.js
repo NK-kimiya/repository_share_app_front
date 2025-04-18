@@ -26,7 +26,7 @@ const Nav = (props) => {
   }
   return (
     <nav>
-       <h1>Share</h1>
+       <h1>Code Bridge</h1>
        <button onClick={Logout}>ログアウト</button>
        <div className={subNavToggle ? 'sub-nav-area' : 'sub-nav-area-none'}>
        {subNavToggle ? 
@@ -41,12 +41,12 @@ const Nav = (props) => {
 
           {subNavToggle ?  
           <li><a href='/ai-search'>AI検索<small>BETA</small></a></li>:
-          <li><a href='/app'><FontAwesomeIcon icon={faAirbnb} /></a></li>
+          <li><a href='/ai-search'><FontAwesomeIcon icon={faAirbnb} /></a></li>
           }
 
           {subNavToggle ?  
           <li><a href='/favorite'>お気に入り</a></li>:
-          <li><a href='/app'><FontAwesomeIcon icon={faThumbsUp} /></a></li>
+          <li><a href='/favorite'><FontAwesomeIcon icon={faThumbsUp} /></a></li>
           }
 
           {subNavToggle ?  

@@ -30,9 +30,6 @@
     color: #3cb371;
 }
 
-.AiSearchProject-area {
-
-}
 
 .AiSearchProject-area h2 {
     width: 80%;
@@ -85,4 +82,36 @@
 
 .result-message {
     text-align: center;
+}
+
+.error_message {
+    width: 80%;
+    margin: 20px auto;
+    color: red;
+    text-align: center;
+  }
+
+ul {
+    list-style: none;
+}
+
+.search-result-item {
+    margin: 20px auto;
+    border: solid 1px gainsboro;
+    width:80%;
+    padding: 10px;
+}
+
+.search-result-item a {
+    color: #3cb371;
+}
+
+  @media screen and (max-width:700px) {
+    .AiSearchProject-area {
+        padding-left: 70px;
+    }
+
+    .AiSearchProject-area textarea {
+        width:80%;
+    }
 }

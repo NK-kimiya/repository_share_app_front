@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'; // ✅ react-router の遷移フ
 import Nav from './Nav';
 
 const Room = (props) => {
-  const { state, toggleView, inputChangeLog, entering} = useContext(RoomContext);
+  const { state, toggleView, inputChangeLog, entering,roomErrorMessage} = useContext(RoomContext);
   //const navigate = useNavigate();  // ✅ ページ遷移用
   const token = props.cookies.get('jwt-token'); // ✅ JWTトークンを取得
 
@@ -58,9 +58,10 @@ const Room = (props) => {
         >
           {state.isEnteringView ? '新規作成' : '入室'}
         </a>
-
+        <p>{roomErrorMessage}</p>
         {/* ボタン表示 */}
         {state.isEnteringView ? (
+          
           <button className="entering-area-form-button" type="submit">
             入室
           </button>

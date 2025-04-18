@@ -44,12 +44,14 @@ const roomReducer = (state, action) => {
 // ✅ RoomProviderコンポーネント
 const RoomProvider = (props) => {
   const { children } = props;
+  const [roomErrorMessage,setRoomErrorMessage] = useState();
   const [state, dispatch] = useReducer(roomReducer, initialState);
   const [roomData, setRoomData] = useState(null);
 
   // ✅ モード切り替え関数
   const toggleView = () => {
     dispatch({ type: TOGGLE_MODE });
+    setRoomErrorMessage(null);
   };
 
   // ✅ 入力フィールド編集関数
@@ -126,6 +128,11 @@ console.log("送信するpassword:", state.credentialsLog.password);
         return false;
       }
     } catch (error) {
+      if(state.isEnteringView) {
+        setRoomErrorMessage("ルームの認証に失敗しました。ユーザー名かパスワードが正しいか確認して下さい。");
+      }else{
+        setRoomErrorMessage("ルームの作成に失敗しました。入力に空欄があるかルーム名が既に存在しています。");
+      }
       if (error.response) {
         if (error.response.status === 401) {
 
@@ -161,6 +168,7 @@ console.log("送信するpassword:", state.credentialsLog.password);
         toggleView,
         inputChangeLog,
         entering,
+        roomErrorMessage,
       }}
     >
       {children}

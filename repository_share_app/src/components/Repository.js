@@ -8,7 +8,7 @@ const Repository = () => {
     isModalOpen, setIsModalOpen, repositoryData,
     repoUrl, setRepoUrl, title, setTitle,
     description, setDescription, demoVideo, setDemoVideo,
-    RepositoryCategories, handleRepositoryCategory, createRepository,categories,RepositoryFilterCategories,fetchRepositories,repositoryRoom
+    RepositoryCategories, handleRepositoryCategory, createRepository,categories,RepositoryFilterCategories,fetchRepositories,repositoryRoom,repositoryCreateError,setRepositoryCreateError,repositoryErrorMessage
 } = useContext(RepositoryContext);
 
 
@@ -16,7 +16,10 @@ const {
     setSelectedCategories
 } = useContext(CategoryContext);
 
-const openModal = () => setIsModalOpen(true);
+const openModal = () => {
+    setIsModalOpen(true);
+    setRepositoryCreateError(null);
+}
 const closeModal = () => setIsModalOpen(false);
 
 const listRepositories = repositoryData.map(repository => {
@@ -32,8 +35,8 @@ const RepositoryFilterClear = () => {
 
 return (
     <div>
-        <button onClick={RepositoryFilterCategories}>検索</button>
-        <button onClick={RepositoryFilterClear}>クリア</button>
+        <button className='category-search-btn' onClick={RepositoryFilterCategories}>検索</button>
+        <button className='search-clear-btn' onClick={RepositoryFilterClear}>クリア</button>
         <button onClick={openModal} id='repository-create-modal'>+</button>
         {isModalOpen && (
             <div style={modalOverlayStyle}>
@@ -75,12 +78,14 @@ return (
                             </div>
                         ))}
                     </div>
+                    <p className='error_message'>{repositoryCreateError}</p>
                     <button onClick={createRepository} id='repository-create-btn'>リポジトリ作成</button>
                     <button onClick={closeModal} id='repository-close-btn'>×</button>
                 </div>
             </div>
         )}
-        <div>{listRepositories}</div>
+        <p className='error_message'>{repositoryErrorMessage}</p>
+        <div className='repository-list-wrap'>{listRepositories}</div>
     </div>
 );
 }

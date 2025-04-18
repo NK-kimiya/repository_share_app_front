@@ -35,8 +35,11 @@ const RepositoryProvider = (props) => {
     const[targetRepositoryId,setTargetRepositoryID] = useState(null);
     const[receiveMessage,setReceiveMessage] = useState(null);
     const [favoriteRepositories,setFavoriteRepositories] = useState([]);
- 
-    
+    const [repositoryCreateError,setRepositoryCreateError] = useState();
+    const [repositoryErrorMessage,setRepositoryErrorMessage] = useState();
+    const [messageError,setMessageError] = useState();
+    const [fetchMessageError,setFetchMessageError] = useState();
+    const [favoriteError,setFavoriteError] = useState();
     const {
         categories,
         selectedCategories
@@ -172,6 +175,7 @@ const RepositoryProvider = (props) => {
       };
     
       const fetchRepositories = async (roomId) => {
+        setRepositoryErrorMessage(null);
         console.log("取得するルームのリポジトリは",roomId);
         try {
             const response = await axios.post('http://localhost:8000/api/repositories/filter/', {
@@ -197,6 +201,7 @@ const RepositoryProvider = (props) => {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setRepositoryErrorMessage("リポジトリ一覧の取得に失敗しました。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -206,6 +211,7 @@ const RepositoryProvider = (props) => {
     };
     
     const createRepository = async () => {
+        setRepositoryCreateError(null);
         const formData = new FormData();
         formData.append('url', repoUrl);
         formData.append('title', title);
@@ -238,6 +244,7 @@ const RepositoryProvider = (props) => {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setRepositoryCreateError("リポジトリ作成に失敗しました、入力内容を確認して下さい。")
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -254,6 +261,7 @@ const RepositoryProvider = (props) => {
 
       //メッセージを送信する関数
       const messageSend = async () => {
+        setMessageError(null);
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/messages/create/',{
                 content:message,
@@ -294,6 +302,7 @@ if (newMessage.created_at) {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setMessageError("メッセージの投稿に失敗しました。メッセージが空欄か確認してください。メッセージを入力しても失敗した場合は、リロードをして再度投稿をするか、しばらく時間をあけてから試して下さい。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -337,6 +346,9 @@ if (newMessage.created_at) {
 
 
       const fetchMessage = async () => {
+        setFetchMessageError(null);
+        setMessageError(null);
+        setFavoriteError(null);
         try {
             const response = await axios.get(
                 `http://127.0.0.1:8000/api/messages/repository/${repositoryDetail.id}/`,
@@ -355,6 +367,7 @@ if (newMessage.created_at) {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setFetchMessageError("メッセージの取得に失敗しました。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -390,6 +403,7 @@ if (newMessage.created_at) {
 
       //カテゴリーでリポジトリーを検索
       const RepositoryFilterCategories = () => {
+        setRepositoryErrorMessage(null);
         if(!selectedCategories || selectedCategories.length === 0) return;
         const params = new URLSearchParams();
         selectedCategories.forEach(id => params.append('category', id));
@@ -410,6 +424,7 @@ if (newMessage.created_at) {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setRepositoryErrorMessage("カテゴリ検索に失敗しました。リロードをするか、時間をあけてから試して下さい。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -420,6 +435,7 @@ if (newMessage.created_at) {
       
       //お気に入りリポジトリのデータを追加
       const addFavoriteRepository = async (repositoryId) => {
+        setFavoriteError(null);
         try {
           const response = await axios.post(
             'http://localhost:8000/api/favorites/create/',
@@ -448,6 +464,7 @@ if (newMessage.created_at) {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setFavoriteError("お気に入り登録に失敗しました。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -488,6 +505,7 @@ if (newMessage.created_at) {
 
       //リポジトリのお気に入りを解除
       const removeFavoriteRepository = async (repositoryId) => {
+        setFavoriteError(null);
         try {
           const response = await axios.delete(
             'http://localhost:8000/api/favorites/delete/',
@@ -523,6 +541,7 @@ if (newMessage.created_at) {
               console.warn("⚠️ トークンが無効、または期限切れです");
               Logout();
             } else {
+              setFavoriteError("お気に入りの解除に失敗しました。");
               console.error("リクエストエラー:", error.response.data);
             }
           } else {
@@ -548,7 +567,7 @@ if (newMessage.created_at) {
             title, setTitle, description, setDescription, demoVideo, setDemoVideo,
             RepositoryCategories, handleRepositoryCategory, createRepository,
             fetchRepositories,categories,repositoryDetail,setRepositoryDetail,messageChange,message,messageSend,fetchmessage,RepositoryFilterCategories,repositoryRoom,
-            addFavoriteRepository,fetchFavoriteRepositories,setRepositoryData,favoriteRepositories,removeFavoriteRepository
+            addFavoriteRepository,fetchFavoriteRepositories,setRepositoryData,favoriteRepositories,removeFavoriteRepository,repositoryCreateError,setRepositoryCreateError,repositoryErrorMessage,messageError,fetchMessageError,favoriteError
         }}>
             {children}
         </RepositoryContext.Provider>

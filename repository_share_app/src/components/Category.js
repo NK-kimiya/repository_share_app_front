@@ -14,9 +14,12 @@ const Category = () => {
     inputCategoryName,
     setInputCategoryName,
     createCategory,
+    categoriesErrorMessage,
+    categoriesCreateErrorMessage
   } = useContext(CategoryContext);
   return (
     <div>
+    <p className='error_message'>{categoriesErrorMessage}</p>
     <div id='category_area'>
       {categories.map((category) => (
         <div
@@ -48,6 +51,7 @@ const Category = () => {
             onChange={(e) => setInputCategoryName(e.target.value)}
           />
           <button onClick={createCategory}>カテゴリ作成</button>
+          <p className='error_message'>{categoriesCreateErrorMessage}</p>
           <button onClick={closeModal} style={closeButtonStyle}>×</button>
         </div>
       </div>

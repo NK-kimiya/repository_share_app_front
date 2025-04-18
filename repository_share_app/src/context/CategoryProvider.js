@@ -11,7 +11,8 @@ const CategoryProvider = (props) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [roomData, setRoomData] = useState(null);
-  
+  const [categoriesCreateErrorMessage,setCategoriesCreateErrorMessage] = useState();
+  const [categoriesErrorMessage,setCategoriesErrorMessage] = useState();
   //JWT トークンの取得
   const [cookies] = useCookies(['jwt-token']);
   const token = cookies['jwt-token'];
@@ -33,6 +34,7 @@ const CategoryProvider = (props) => {
   //カテゴリ取得
   const fetchCategories = async (roomId) => {
     try {
+      setCategoriesErrorMessage(null);
       const response = await axios.post(
         'http://127.0.0.1:8000/api/categories/filter/',
         { room_id: roomId },
@@ -45,7 +47,7 @@ const CategoryProvider = (props) => {
       );
       setCategories(response.data);
     } catch (error) {
-
+      setCategoriesErrorMessage("このルームにはカテゴリが存在しません。");
     }
   };
 
@@ -68,6 +70,7 @@ const CategoryProvider = (props) => {
       setInputCategoryName('');
       setCategories([...categories, response.data]);
       closeModal();
+      setCategoriesErrorMessage(null);
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
@@ -75,6 +78,7 @@ const CategoryProvider = (props) => {
           console.warn("⚠️ トークンが無効、または期限切れです");
           Logout();
         } else {
+          setCategoriesCreateErrorMessage("カテゴリ作成に失敗しました。入力が空欄でないか確認して下さい。");
           console.error("リクエストエラー:", error.response.data);
         }
       } else {
@@ -107,8 +111,10 @@ const Logout = () => {
   
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCategoriesCreateErrorMessage(null);
+  }
 
   return (
     <CategoryContext.Provider
@@ -123,6 +129,8 @@ const Logout = () => {
         inputCategoryName,
         setInputCategoryName,
         createCategory,
+        categoriesErrorMessage,
+        categoriesCreateErrorMessage
       }}
     >
       {children}

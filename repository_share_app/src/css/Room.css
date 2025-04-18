@@ -30,3 +30,16 @@
 .room-login-area .sub-nav-area-none {
     display: none;
 }
+
+.error_message {
+    width: 80%;
+    margin: 20px auto;
+    color: red;
+}
+
+
+@media screen and (max-width:450px) {
+    #entering-area {
+        width: 80%;
+    }
+}

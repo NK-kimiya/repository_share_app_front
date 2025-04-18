@@ -8,6 +8,7 @@ import Nav from './Nav';
 const AiSearch = () => {
   const [title,setTitle] = useState('')
   const [result,setResult] = useState(null)
+  const [errorMessage,setErrorMessage] = useState(null);
   //プログレスバーのテストコード
   const setProgress = (percent) => {
     const circle = document.querySelector('.progress-ring__circle');
@@ -42,6 +43,7 @@ const AiSearch = () => {
       }
 
       const data = await response.json();
+      console.log("AI検索の結果",data);
       setResult(data);
       const percentData = data.predicted_probability * 100;
       const interval = setInterval(() => {
@@ -55,8 +57,12 @@ const AiSearch = () => {
       progress++;
       },30);
 
+      setErrorMessage(null);
+
     } catch (error) {
+      setResult(null);
       console.error('エラー:', error);
+      setErrorMessage("予測に失敗しました。入力テキストが記入されていません。");
     }
   };
   return (
@@ -72,6 +78,7 @@ const AiSearch = () => {
           <button onClick={handleSearch} className='search-button'>
             検索
           </button>
+          <p className='error_message'>{errorMessage}</p>
           {result && (
             <div style={{ marginTop: '20px' }}>
               <h3>一致するプロジェクト：{result.predicted_category}</h3>
@@ -86,7 +93,40 @@ const AiSearch = () => {
                 <ul>
                   {result.projects.map((project) => (
                     <li key={project.id}>
-                      <strong>{project.title}</strong>: {project.text}
+                      <div className='search-result-item'>
+                      <p>{project.text}</p>
+                      {project.subheading1 && (
+                        <>
+                          <h5>{project.subheading1}</h5>
+                          <p>
+                              <a href={project.url1} target="_blank" rel="noopener noreferrer">
+                                {project.url1}
+                              </a>
+                          </p>
+                        </>
+                      )}
+                      {project.subheading2 && (
+                        <>
+                          <h5>{project.subheading2}</h5>
+                          <p>
+                              <a href={project.url2} target="_blank" rel="noopener noreferrer">
+                                {project.url2}
+                              </a>
+                          </p>
+                        </>
+                      )}
+
+                      {project.subheading3 && (
+                        <>
+                          <h5>{project.subheading3}</h5>
+                          <p>
+                              <a href={project.url3} target="_blank" rel="noopener noreferrer">
+                                {project.url3}
+                              </a>
+                          </p>
+                        </>
+                      )}
+                      </div>
                     </li>
                   ))}
                 </ul>

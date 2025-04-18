@@ -1,5 +1,9 @@
 import {useContext, useState,useEffect} from 'react'
-import { RepositoryContext } from '../context/RepositoryProvider'
+import { RepositoryContext } from '../context/RepositoryProvider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 const RepositoryDetail = () => {
 
   const {repositoryDetail} = useContext(RepositoryContext);
@@ -9,7 +13,12 @@ const RepositoryDetail = () => {
   const {fetchmessage} = useContext(RepositoryContext);
   const {addFavoriteRepository} = useContext(RepositoryContext);
   const {removeFavoriteRepository} = useContext(RepositoryContext);
-  
+
+  const {
+    messageError,
+    fetchMessageError,
+    favoriteError
+  } = useContext(RepositoryContext);
   useEffect(() => {
     //console.log("受取っているメッセージ",fetchmessage);
   },[fetchmessage])
@@ -18,9 +27,12 @@ const RepositoryDetail = () => {
     console.log("詳細選択のリポジトリ",repositoryDetail);
   },[repositoryDetail])
 
-  if (!repositoryDetail || !repositoryDetail.title || !repositoryDetail.description || !repositoryDetail.demo_video) {
+  if (!repositoryDetail || !repositoryDetail.title || !repositoryDetail.description) {
     // データが不足しているか、存在しない場合はこちらを表示
-    return <div>データが利用できません。</div>;
+    return <div className='git-icon'>
+      <FontAwesomeIcon icon={faGithub} />
+      <p>詳細表示はされていません。</p>
+      </div>;
   }
 
 
@@ -30,18 +42,21 @@ const RepositoryDetail = () => {
         <h2 className='repository-detail-area-title'>{repositoryDetail.title}</h2>
       <p className='repository-detail-area-description'>{repositoryDetail.description}</p>
       <a href={repositoryDetail.url} className='repository-detail-area-link'>{repositoryDetail.url}</a>
+      {repositoryDetail.demo_video && (
       <video controls className='repository-detail-area-video'>
-        <source src={`http://localhost:8000${repositoryDetail.demo_video}`}></source>
+        <source src={`http://localhost:8000${repositoryDetail.demo_video}`} />
       </video>
+      )}
       {repositoryDetail.favorite ? (
-  <button onClick={() => removeFavoriteRepository(repositoryDetail.id)}>
-    お気に入り解除
+  <button className='repository-favorite-delete-btn' onClick={() => removeFavoriteRepository(repositoryDetail.id)}>
+    お気に入り解除<FontAwesomeIcon icon={faUserMinus} />
   </button>
 ) : (
-  <button onClick={() => addFavoriteRepository(repositoryDetail.id)}>
-    お気に入りに追加
+  <button className='repository-favorite-add-btn' onClick={() => addFavoriteRepository(repositoryDetail.id)}>
+    お気に入りに追加<FontAwesomeIcon icon={faHeart} />
   </button>
 )}
+<p className='error_message'>{favoriteError}</p>
         </div>
         <div id='chat-notice-area'>
 
@@ -49,6 +64,7 @@ const RepositoryDetail = () => {
         <div id='chat-area'>
           
           <div id="message-list-area">
+            <p className='error_message'>{fetchMessageError}</p>
           {fetchmessage.filter(msg => msg.repository === repositoryDetail.id).length === 0 ? (
   <p>メッセージはまだありません。</p>
 ) : (
@@ -75,6 +91,7 @@ const RepositoryDetail = () => {
              onChange={messageChange}
              placeholder='メッセージを入力して下さい。'
             />
+            <p className='error_message'>{messageError}</p>
             <button onClick={messageSend}>送信</button>
 
           </div>

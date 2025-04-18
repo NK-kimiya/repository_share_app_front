@@ -22,3 +22,9 @@
     padding: 5px 10px;
     border-radius: 15px;
 }
+
+.error_message {
+  width: 80%;
+  margin: 20px auto;
+  color: red;
+}

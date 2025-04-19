@@ -15,7 +15,7 @@ const Category = () => {
     setInputCategoryName,
     createCategory,
     categoriesErrorMessage,
-    categoriesCreateErrorMessage
+    categoriesCreateErrorMessage,
   } = useContext(CategoryContext);
   return (
     <div>

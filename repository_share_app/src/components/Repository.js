@@ -2,7 +2,6 @@ import {useContext,useEffect} from 'react'
 import { RepositoryContext } from '../context/RepositoryProvider';
 import { CategoryContext } from '../context/CategoryProvider';
 import RepositoryItem from './RepositoryItem';
-
 const Repository = () => {
   const {
     isModalOpen, setIsModalOpen, repositoryData,
@@ -13,7 +12,7 @@ const Repository = () => {
 
 
 const {
-    setSelectedCategories
+    setSelectedCategories,
 } = useContext(CategoryContext);
 
 const openModal = () => {

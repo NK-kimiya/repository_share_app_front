@@ -16,6 +16,7 @@ const FavoriteRepository = () => {
   return (
     <div>
       <Nav/>
+      <h3 className='room-name-title'>お気に入り</h3>
       <div className='main-area'>
         <div className='repository-detail-area'>
           <RepositoryDetail/>

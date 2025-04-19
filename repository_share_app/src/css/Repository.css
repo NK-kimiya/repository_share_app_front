@@ -91,7 +91,7 @@
 
 .repository-detail-area {
     width: 80%;
-    margin: 20px auto;
+    margin:0px auto;
 }
 .repository-detail-area-title {
     border-bottom: solid 1px gainsboro;
@@ -107,6 +107,7 @@
     width: 100%;
     text-align: left;
     margin: 10px auto;
+    white-space: pre-wrap;
 }
 
 .repository-detail-area-link {

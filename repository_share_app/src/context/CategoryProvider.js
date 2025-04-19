@@ -130,7 +130,8 @@ const Logout = () => {
         setInputCategoryName,
         createCategory,
         categoriesErrorMessage,
-        categoriesCreateErrorMessage
+        categoriesCreateErrorMessage,
+        roomData
       }}
     >
       {children}

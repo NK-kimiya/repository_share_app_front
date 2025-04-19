@@ -68,6 +68,7 @@ const AiSearch = () => {
   return (
     <div>
       <Nav/>
+      <h3 className='room-name-title'>AI検索BETA版</h3>
           <div className='AiSearchProject-area'>
           <h2>GitProject 検索</h2>
           <textarea

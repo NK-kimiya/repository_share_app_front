@@ -14,9 +14,14 @@ const RepositoryItem = ({Repository}) => {
     <div className='repository-item'>
       <a href='#' className='repository-list-area-item' onClick={() => setRepositoryDetail(Repository)}>
       <h3>{Repository.title || 'No Title'}</h3>
-      <p>{Repository.description || 'No Description'}</p>
-      {Repository.readCount > 0 && <small>新着{Repository.readCount}件のメッセージ</small>}
+      <p>{Repository.description
+  ? Repository.description.length > 30
+    ? Repository.description.slice(0, 30) + '...'
+    : Repository.description
+  : 'No Description'}</p>
+  <p>{Repository.readCount > 0 && <small>新着{Repository.readCount}件のメッセージ</small>}</p>
       </a>
+      
    
      
       {/*--<video controls>

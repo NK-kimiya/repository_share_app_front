@@ -59,6 +59,12 @@ footer small {
   text-align: center;
 }
 
+.room-name-title {
+  padding-left: 100px;
+  border-bottom: solid 1px gainsboro;
+  padding-bottom: 10px;
+}
+
 @media screen and (max-width:700px) {
   .main-area {
     display: block;

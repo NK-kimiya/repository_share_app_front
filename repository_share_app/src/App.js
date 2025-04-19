@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, {useContext } from 'react';
 import './App.css';
 import './css/Login.css'
 import './css/Nav.css'
@@ -11,11 +11,16 @@ import Category from './components/Category';
 import Repository from './components/Repository';
 import RepositoryDetail from './components/RepositoryDetail';
 import AiSearch from './components/AiSearch';
+import { CategoryContext } from './context/CategoryProvider';
 function App() {
+  const {
+    roomData
+  } = useContext(CategoryContext);
   return (
  
     <div className="App">
       <Nav/>
+      <h3 className='room-name-title'>ルームTOP<br></br><small>「{roomData?.name}」のルームに入室しています。</small></h3>
       <div className='main-area'>
         <div className='repository-detail-area'>
           <RepositoryDetail/>

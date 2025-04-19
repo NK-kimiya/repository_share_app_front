@@ -28,9 +28,9 @@ const Room = (props) => {
       <Nav/>
     <div id="entering-area">
       {state.isEnteringView ? (
-            <h3>ルームの新規作成</h3>
-        ) : (
             <h3>ルームに参加</h3>
+        ) : (
+          <h3>ルームの新規作成</h3>
         )}
       <form id="entering-area-form" onSubmit={handleSubmit}>
         <small>ルーム名</small>

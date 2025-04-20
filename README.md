@@ -65,3 +65,31 @@
 | `react-circular-progressbar` | 円形プログレスバーの表示                    |
 | `react-icons`                | チャットアイコンなどの視覚装飾               |
 | `Context API（React標準）`   | グローバルな状態管理（リポジトリやルーム）  |
+
+
+
+## ⚙️ セットアップ方法
+
+このプロジェクトは React で構成されたフロントエンドアプリです。以下の手順でローカル環境で動作確認が可能です。
+
+---
+
+### 1. リポジトリをクローン
+
+```bash
+git clone https://github.com/NK-kimiya/repository_share_app_front.git
+cd repository_share_app_front
+
+### 2. 依存ライブラリファイルのディレクトリへ移動
+cd repository_share_app
+
+### 3. 依存ライブラリをインストール
+npm install
+
+### 4.ローカル開発サーバーを起動(ポート3000番)
+npm start
+
+アプリは通常、以下のURLで起動されます：
+👉 http://localhost:3000
+
+

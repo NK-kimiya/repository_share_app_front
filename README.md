@@ -102,4 +102,16 @@ npm start
 アプリは通常、以下のURLで起動されます：
 👉 http://localhost:3000
 
+## 🔗 関連リポジトリ
+
+このリポジトリは、フロントエンド（React）で構築されたユーザーインターフェースを提供するアプリケーションです。  
+本プロジェクトは、以下の2つのバックエンドと連携して動作しています：
+
+- 🧠 **APIバックエンド（Django + BERTによる分類）**  
+  [https://github.com/NK-kimiya/repository_share_app_api](https://github.com/NK-kimiya/repository_share_app_api.git)
+
+- 🔌 **リアルタイムサーバー（Express + Socket.io）**  
+  [https://github.com/NK-kimiya/repository_share_app_socket](https://github.com/NK-kimiya/repository_share_app_socket.git)
+
+
 

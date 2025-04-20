@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# 制作物：CodeBridge（コードブリッジ）
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🎯 目的・背景
 
-## Available Scripts
+ハッカソンに出場した際、私は「チームメンバーのスキルを把握するまでに時間がかかる」という課題を感じました。  
+また、ChatGPTなど生成AIの進化により、GitHubのリポジトリを読み解きながら実装や学習を行うスタイルが、以前よりも取りやすくなってきたとも実感しました。
 
-In the project directory, you can run:
+そこで私は、「リポジトリを共有し、質問や議論ができるWebアプリ」を開発しました。  
+このアプリでは、チーム開発におけるスキル共有の円滑化と、学習者同士が技術知識を共有し合える環境の実現を目指して制作しました。
 
-### `npm start`
+アプリの名前は **「CodeBridge（コードブリッジ）」** です。  
+その由来は、“プログラミング（コード）を通じて、人と人とをつなぐ架け橋になりたい” という想いから名付けました。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠 使用した技術スタック
 
-### `npm test`
+- **フロントエンド**：React  
+- **バックエンド**：Django REST Framework、Express.js  
+- **データベース**：SQLite（Django側）、MongoDB（Express/Socket側）  
+- **リアルタイム通信**：Socket.io（Express）  
+- **認証方式**：JWT（JSON Web Token）  
+- **AIモデル**：PyTorch（BERTによる文章分類）  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📦 このリポジトリ（React側）で実装されている主な機能
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🔐 ユーザー認証
+- JWTトークンを使用してログイン・ログアウトを実装
+- Cookieでトークンを保持し、リクエストに自動添付
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🏠 ルーム機能
+- ルーム名とパスワードで入室
+- 参加中ルームの状態をContext APIで管理
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 📂 リポジトリ登録・表示
+- タイトル、URL、説明文、デモ動画を入力してリポジトリを投稿
+- すべてのリポジトリ一覧を表示
+- カテゴリ別フィルタリングに対応
 
-### `npm run eject`
+### 🤖 AIによるカテゴリ分類
+- 入力されたリポジトリ説明文をBERT分類APIに送信し、自動でカテゴリ判定
+- 円形プログレスバーとアニメーション付きで結果表示
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 💬 リアルタイムメッセージ機能
+- 各リポジトリに紐づいた掲示板でリアルタイム投稿・受信
+- 既読状態の管理や通知機能も実装（Room単位）
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### ⭐ お気に入り管理
+- リポジトリをお気に入りに登録
+- お気に入りのみをフィルタ表示
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📚 使用されている主なライブラリ（React）
 
-## Learn More
+| ライブラリ名                  | 役割                                         |
+|------------------------------|----------------------------------------------|
+| `react-router-dom`           | ページ遷移・ルーティング機能                 |
+| `axios`                      | Django APIとのHTTP通信                       |
+| `socket.io-client`           | Expressサーバーとのリアルタイム通信          |
+| `react-cookie`               | JWTトークンの保存・送信                      |
+| `framer-motion`              | アニメーション（AI検索画面など）             |
+| `react-circular-progressbar` | 円形プログレスバーの表示                    |
+| `react-icons`                | チャットアイコンなどの視覚装飾               |
+| `Context API（React標準）`   | グローバルな状態管理（リポジトリやルーム）  |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🧱 動作環境
 
-### Code Splitting
+このプロジェクトは以下のバージョンで開発・動作確認しています：
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Node.js**：v22.14.0  
+- **npm**：v10.9.2
 
-### Analyzing the Bundle Size
+## ⚙️ セットアップ方法
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+このプロジェクトは React で構成されたフロントエンドアプリです。以下の手順でローカル環境で動作確認が可能です。
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 🛠 Node.js のインストール（未インストールの場合）
 
-### Advanced Configuration
+ [https://nodejs.org/ja/](https://nodejs.org/ja/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 1. リポジトリをクローン
 
-### Deployment
+```bash
+git clone https://github.com/NK-kimiya/repository_share_app_front.git
+cd repository_share_app_front
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 2. 依存ライブラリファイルのディレクトリへ移動
+cd repository_share_app
 
-### `npm run build` fails to minify
+### 3. 依存ライブラリをインストール
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 4.ローカル開発サーバーを起動(ポート3000番)
+npm start
+
+アプリは通常、以下のURLで起動されます：
+👉 http://localhost:3000
+
+
